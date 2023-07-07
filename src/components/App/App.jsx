@@ -18,15 +18,26 @@ const INITIAL_STATE = {
 class App extends Component {
   state = { ...INITIAL_STATE };
 
-  // componentDidMount() {
-  //   const localData = localStorage.getItem('contacts');
-  //   console.log(localData);
-  // }
+  componentDidMount() {
+    const localData = localStorage.getItem('contacts');
+    if (localData) this.setState({ contacts: JSON.parse(localData) });
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts)
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    console.log('prevState.contacts', prevState.contacts);
-    console.log('this.state.contacts', this.state.contacts);
+
+    // if (
+    //   prevState.contacts &&
+    //   prevState.contacts.length < this.state.contacts.length
+    // )
+    //   toast.success('Add new contsct!');
+
+    // if (
+    //   prevState.contacts &&
+    //   prevState.contacts.length > this.state.contacts.length
+    // )
+    //   toast.error('Delete contact!');
   }
 
   //додавання нового контакту у контакт-лист або алерто що контакт вже є
@@ -56,6 +67,7 @@ class App extends Component {
     const { contacts, filter } = this.state;
     return (
       <Wrapper>
+        {/* <Toaster /> */}
         <MainTitle>Phonebook</MainTitle>
         <ContactForm onSubmit={this.handleSubmit} />
         <Title>Contacts</Title>
